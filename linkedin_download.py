@@ -3,12 +3,18 @@ import time
 import subprocess
 import os
 import random
+import tkinter as tk
+from tkinter import ttk
+
+# UI initialisation
+win = tk.Tk()
+win.title("Linked In Downloader")
 
 # Object to configure Chrome
 options = webdriver.ChromeOptions()
 
 # Start Chrome in headless mode
-options.add_argument('headless')
+# options.add_argument('headless')
 options.add_argument('--mute-audio')
 
 # Set window size
@@ -23,8 +29,8 @@ def site_login():
     driver.get("https://www.linkedin.com/uas/login?fromSignIn=true&trk=learning&_l=de_DE&uno_session_redirect=%2Flearning%2Fme&session_redirect=%2Flearning%2FloginRedirect.html&is_enterprise_authed=")
     if driver.find_elements_by_css_selector('#username'):
         print("username exists")
-        driver.find_element_by_id("username").send_keys("marcoloew333@gmail.com")
-        driver.find_element_by_id("password").send_keys("je88kk312E\x23lin")
+        driver.find_element_by_id("username").send_keys(login_mail.get())
+        driver.find_element_by_id("password").send_keys(login_pw.get())
         time.sleep(3)
         if driver.find_elements_by_css_selector("[type='submit']")[0]:
             print("button was input")
@@ -35,8 +41,8 @@ def site_login():
             print("button was button")
     else:
         print("session_key-login exists")
-        driver.find_element_by_id("session_key-login").send_keys("marcoloew333@gmail.com")
-        driver.find_element_by_id("session_password-login").send_keys("je88kk312E\x23lin")
+        driver.find_element_by_id("session_key-login").send_keys(login_mail.get())
+        driver.find_element_by_id("session_password-login").send_keys(login_pw.get())
         driver.find_element_by_css_selector("input[type='submit']").click()
 
 
@@ -134,7 +140,30 @@ def notify_complete(title, subtitle, text):
               """.format(text, title, subtitle))
 
 
-site_login()
-input_dialog()
-notify_complete("All links successfully saved in file.", link_count(), "Completed")
-driver.quit()
+def driver_quit():
+    driver.quit()
+
+
+# UI design
+ttk.Label(win, text="Mail Address").grid(column=0, row=0)
+login_mail = tk.StringVar()
+entered_login_mail = tk.Entry(win, width=25, textvariable=login_mail)
+entered_login_mail.grid(column=1, row=0)
+
+ttk.Label(win, text="Password").grid(column=0, row=1)
+login_pw = tk.StringVar()
+entered_login_pw = tk.Entry(win, width=25, textvariable=login_pw)
+entered_login_pw.grid(column=1, row=1)
+
+login_button = ttk.Button(win, text="Connect", command=site_login)
+login_button.grid(column=0, row=2)
+quit_button = ttk.Button(win, text="Quit", command=driver_quit)
+quit_button.grid(column=0, row=3)
+
+# UI execution
+win.mainloop()
+
+# site_login()
+# input_dialog()
+# notify_complete("All links successfully saved in file.", link_count(), "Completed")
+# driver.quit()
