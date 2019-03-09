@@ -145,20 +145,26 @@ def driver_quit():
 
 
 # UI design
-ttk.Label(win, text="Mail Address").grid(column=0, row=0)
+AccountDetailsFrame = ttk.LabelFrame(win, text="Login")
+AccountDetailsFrame.grid(column=0, row=0, padx=10, pady=10)
+
+ttk.Label(AccountDetailsFrame, text="Mail Address").grid(column=0, row=0)
 login_mail = tk.StringVar()
-entered_login_mail = tk.Entry(win, width=25, textvariable=login_mail)
+entered_login_mail = tk.Entry(AccountDetailsFrame, width=25, textvariable=login_mail)
 entered_login_mail.grid(column=1, row=0)
 
-ttk.Label(win, text="Password").grid(column=0, row=1)
+ttk.Label(AccountDetailsFrame, text="Password").grid(column=0, row=1)
 login_pw = tk.StringVar()
-entered_login_pw = tk.Entry(win, width=25, textvariable=login_pw)
+entered_login_pw = tk.Entry(AccountDetailsFrame, width=25, textvariable=login_pw)
 entered_login_pw.grid(column=1, row=1)
 
 login_button = ttk.Button(win, text="Connect", command=site_login)
 login_button.grid(column=0, row=2)
 quit_button = ttk.Button(win, text="Quit", command=driver_quit)
 quit_button.grid(column=0, row=3)
+
+for child in AccountDetailsFrame.winfo_children():
+    child.grid_configure(padx=10, pady=10)
 
 # UI execution
 win.mainloop()
