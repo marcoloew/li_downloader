@@ -5,6 +5,7 @@ import os
 import random
 import tkinter as tk
 from tkinter import ttk
+from tkinter import Menu
 
 # UI initialisation
 win = tk.Tk()
@@ -158,10 +159,26 @@ login_pw = tk.StringVar()
 entered_login_pw = tk.Entry(AccountDetailsFrame, width=25, textvariable=login_pw)
 entered_login_pw.grid(column=1, row=1)
 
+# #button
 login_button = ttk.Button(win, text="Connect", command=site_login)
-login_button.grid(column=0, row=2)
-quit_button = ttk.Button(win, text="Quit", command=driver_quit)
-quit_button.grid(column=0, row=3)
+login_button.grid(column=0, row=2, sticky="WE", padx=10, pady=5)
+quit_button = ttk.Button(win, text="Quit Instance", command=driver_quit)
+quit_button.grid(column=0, row=3, sticky="WE", padx=10, pady=5)
+
+
+# #exit code
+def _exit():
+    win.quit()
+    win.destroy()
+    exit()
+
+
+# #menubar
+menubar = Menu(win)
+win.config(menu=menubar)
+fileMenu = Menu(menubar)
+menubar.add_cascade(label="File", menu=fileMenu)
+fileMenu.add_command(label="Exit", command=exit)
 
 for child in AccountDetailsFrame.winfo_children():
     child.grid_configure(padx=10, pady=10)
