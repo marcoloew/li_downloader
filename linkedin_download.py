@@ -18,7 +18,7 @@ options = webdriver.ChromeOptions()
 # options.add_argument('headless')
 options.add_argument('--mute-audio')
 
-# Set window size
+# Set window size of Chrome
 options.add_argument('window-size=1200x600')
 
 # Define variable 'driver' and apply the predefined options
@@ -168,6 +168,7 @@ quit_button.grid(column=0, row=3, sticky="WE", padx=10, pady=5)
 
 # #exit code
 def _exit():
+    driver.quit()
     win.quit()
     win.destroy()
     exit()
@@ -178,7 +179,7 @@ menubar = Menu(win)
 win.config(menu=menubar)
 fileMenu = Menu(menubar)
 menubar.add_cascade(label="File", menu=fileMenu)
-fileMenu.add_command(label="Exit", command=exit)
+fileMenu.add_command(label="Exit", command=_exit)
 
 for child in AccountDetailsFrame.winfo_children():
     child.grid_configure(padx=10, pady=10)
